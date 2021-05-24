@@ -1,4 +1,6 @@
-# java lab 8
+# java lab 9
  
-### task
-build ierarchy of classes
+
+Create REST service based on classes from lab 8 with basic methods (POST, GET, PUT, DELETE)
+
+

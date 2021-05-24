@@ -1,9 +1,8 @@
-package com.lab8.securities_manager;
+package com.labs.lab9demo.manager;
 
-
-import com.lab8.Securities;
-import com.lab8.enums.RiskLevel;
-import com.lab8.enums.TradingLevel;
+import com.labs.lab9demo.enums.RiskLevel;
+import com.labs.lab9demo.enums.TradingLevel;
+import com.labs.lab9demo.securities.Securities;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,14 +10,13 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @Getter
 @NoArgsConstructor
-public class BrokerManager {
+public class Broker {
 
     private List<Securities> securities;
 
-    public BrokerManager(final List<Securities> securitiesList) {
+    public Broker(final List<Securities> securitiesList) {
         securities = securitiesList;
     }
 
@@ -34,15 +32,13 @@ public class BrokerManager {
 
     public List<Securities> searchByRiskLevel(final RiskLevel searchRiskLevel) {
         return securities.stream()
-                .filter(s ->
-                s.getRiskLevel().equals(searchRiskLevel))
+                .filter(s -> s.getRiskLevel().equals(searchRiskLevel))
                 .collect(Collectors.toList());
     }
 
     public List<Securities> searchByTrend(final TradingLevel searchTradingLevel) {
         return securities.stream()
-                .filter(s ->
-                s.getTradingLevel().equals(searchTradingLevel))
+                .filter(s -> s.getTradingLevel().equals(searchTradingLevel))
                 .collect(Collectors.toList());
     }
 
@@ -60,7 +56,7 @@ public class BrokerManager {
     public List<Securities> sortByDate(final boolean reverse) {
         if (reverse) {
             securities.sort((Securities s1, Securities s2) ->
-                        s2.getBuyingDate().compareTo(s1.getBuyingDate()));
+                    s2.getBuyingDate().compareTo(s1.getBuyingDate()));
         } else {
             securities.sort(Comparator.comparing(Securities::getBuyingDate));
         }
@@ -68,9 +64,8 @@ public class BrokerManager {
     }
 
 
-    public void show(List<Securities> securitiesList) {
+    public void showSecurities(List<Securities> securitiesList) {
         securitiesList.forEach(System.out::println);
     }
-
 
 }

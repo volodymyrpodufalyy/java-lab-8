@@ -1,16 +1,12 @@
-package com.lab8;
+package com.labs.lab9demo.securities;
 
-import com.lab8.enums.RiskLevel;
-import com.lab8.enums.TradingLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.labs.lab9demo.enums.RiskLevel;
+import com.labs.lab9demo.enums.TradingLevel;
+import lombok.*;
 
-@Setter
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 public class Securities {
     private String type;
     private String brand;
@@ -18,11 +14,6 @@ public class Securities {
     private String buyingDate;
     private RiskLevel riskLevel;
     private TradingLevel tradingLevel;
-
-    @Override
-    public String toString() {
-        return objToString() + "|\n|";
-    }
 
     public String objToString() {
         return  "\n|Type: " + type
@@ -33,4 +24,3 @@ public class Securities {
                 + "|\n|Trading level: " + tradingLevel;
     }
 }
-
