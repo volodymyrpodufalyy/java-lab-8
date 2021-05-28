@@ -1,33 +1,29 @@
 package com.labs.lab9demo.securities;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.labs.lab9demo.enums.RiskLevel;
 import com.labs.lab9demo.enums.TradingLevel;
 import lombok.*;
 
-@EqualsAndHashCode(callSuper = true)
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 @Data
-@Setter
-@Getter
 @NoArgsConstructor
-public class Shares extends Securities {
-    public int id;
+@AllArgsConstructor
+public class Shares  {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Integer id;
+    private String type;
+    private String brand;
+    private Integer price;
+    private String buyingDate;
+    private RiskLevel riskLevel;
+    private TradingLevel tradingLevel;
     private String sharesCategory;
 
-    public Shares(@JsonProperty("type") final String type,@JsonProperty("brand") final String brand,@JsonProperty("price") final  Integer price,
-                  @JsonProperty("buyingDate") final String buyingDate,
-                  @JsonProperty("riskLevel") final RiskLevel riskLevel,
-                  @JsonProperty("tradingLevel") final TradingLevel tradingLevel,
-                  @JsonProperty("sharesCategory") final String sharesCategory) {
-        super(type, brand, price, buyingDate, riskLevel, tradingLevel);
-        this.sharesCategory = sharesCategory;
-    }
-
-    @Override
-    public String toString() {
-        return objToString()
-                + "|\n|Shares category: " + sharesCategory
-                + "|\n";
-    }
 
 }

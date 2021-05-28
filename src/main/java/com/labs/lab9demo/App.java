@@ -13,7 +13,7 @@ import java.util.ArrayList;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class App {
     public static void main(final String[] args) {
-        Broker brokerManager = new Broker(new ArrayList<>());
+//        Broker brokerManager = new Broker(new ArrayList<>());
 //        brokerManager.addSecurity(new Shares("Shares", "General Motors", 65,
 //                "20 February", RiskLevel.EXTRAHIGH, TradingLevel.DESCENDING, "Usual"));
 //        brokerManager.addSecurity(new Shares("Shares","Clubhouse", 2000,

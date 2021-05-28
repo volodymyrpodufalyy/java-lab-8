@@ -1,56 +1,54 @@
 package com.labs.lab9demo.service;
 
+import com.labs.lab9demo.DAO.SecuritiesRepository;
 import com.labs.lab9demo.securities.Shares;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.web.context.annotation.ApplicationScope;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
-@RestController
-@RequestMapping("/shares")
+@Service
+@Component("com.labs.lab9demo.service.SecuritiesRepository")
+@Data
+@ApplicationScope
 public class SecuritiesService {
 
-    private final Map<Integer, Shares> shares = new HashMap<>();
+    private SecuritiesRepository repository;
 
-    private final AtomicInteger idCounter = new AtomicInteger();
-
-    @GetMapping
-    public List<Shares> getShares() {
-        return new LinkedList<>(shares.values());
+    @Autowired
+    public SecuritiesService(SecuritiesRepository securitiesRepository) {
+        this.repository = securitiesRepository;
     }
 
-    @GetMapping(path = "/{id}")
-    public Shares getShare(final @PathVariable("id") Integer sharesId) {
-        return shares.get(sharesId);
+    public void addShare(Shares share){
+        repository.save(share);
     }
 
-    @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Shares createShares(@RequestBody Shares share) {
-
-        share.setId(idCounter.incrementAndGet());
-        this.shares.put(share.getId(), share);
-
-        return share;
-    }
-
-    @DeleteMapping(path = "/{id}")
-    public ResponseEntity<Shares> deleteShares(@PathVariable("id") Integer sharesId) {
-        HttpStatus status = shares.remove(sharesId) == null ? HttpStatus.NOT_FOUND : HttpStatus.OK;
-
-        return ResponseEntity.status(status).build();
-    }
-
-    @PutMapping(path = "/{id}")
-    public Object updateShares(@PathVariable("id") Integer sharesId, final @RequestBody Shares share) {
-        if(shares.containsKey(sharesId)) {
-            share.setId(sharesId);
-            return this.shares.put(share.getId(), share);
-        } else {
-            return new ResponseEntity<Shares>(HttpStatus.NOT_FOUND);
+    public Shares updateShare(Integer id, Shares share) throws SharesNotFoundException {
+        if (repository.existsById(share.getId())) {
+            share.setId(id);
+            return repository.save(share);
         }
+        throw new SharesNotFoundException("Share " + share.getId() + " not found");
+    }
+
+    public List<Shares> getShares(){
+        return repository.findAll();
+    }
+
+    public Shares getShare(Integer id) {
+        return repository.findById(id).orElseThrow();
+    }
+
+    public boolean deleteShare(Integer id){
+        if(repository.findById(id).isPresent()) {
+            repository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 
 }
