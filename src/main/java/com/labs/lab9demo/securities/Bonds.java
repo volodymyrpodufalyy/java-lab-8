@@ -1,8 +1,7 @@
-package com.lab8.securities_types;
+package com.labs.lab9demo.securities;
 
-import com.lab8.Securities;
-import com.lab8.enums.RiskLevel;
-import com.lab8.enums.TradingLevel;
+import com.labs.lab9demo.enums.RiskLevel;
+import com.labs.lab9demo.enums.TradingLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +12,11 @@ import lombok.Setter;
 public class Bonds extends Securities {
     private Float bondPercent;
     private String maturity;
+
+    public Bonds(Float bondPercent, String maturity){
+        this.bondPercent = bondPercent;
+        this.maturity = maturity;
+    }
 
     public Bonds(final String type, final String brand, final  Integer price, final String buyingDate,
                  final RiskLevel riskLevel, final TradingLevel tradingLevel,
