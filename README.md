@@ -1,4 +1,3 @@
 # java lab 8
  
-### task
-build ierarchy of classes
+### Ierarchy of classes, and REST service with database for it
